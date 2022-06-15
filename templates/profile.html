@@ -42,7 +42,7 @@
                     {% else %}
                         <span style="color: white; font-size: 27px;"><b>0 followers</b></span>
                     {% endif %}
-					
+
                     {% if user_following %}
                         <span style="color: white; font-size: 27px;"><b>{{ user_following}} following</b></span>
                     {% else %}
@@ -53,7 +53,7 @@
                     <input type="hidden" value="{{ user_object.username }}" name="user">
 
                     {% if user_object.username == user.username %}
-                        <a href="{% url 'core:settings' %}">Account Settings</a>
+                        <a href="/settings">Account Settings</a>
                     {% else %}
                        <a href="" title="" data-ripple=""><button type="submit" style="background-color: #ffc0cb; border: #ffc0cb;">
                            {{ button_text }}</button></a>
