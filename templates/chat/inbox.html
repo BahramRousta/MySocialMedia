@@ -1,0 +1,59 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- CSS only -->
+    <link href="{% static 'assets/images/favicon.png' %}" rel="icon" type="image/png">
+    <title>Settings</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/uikit.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 p-5">
+        <h1 class="text-2xl leading-6 text-gray-900 tracking-tight mt-3"><a href="{% url 'index' %}">Home</a></h1>
+        <hr>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 p-5">
+      <form method="GET" action="{% url 'chat:create_thread' %}">
+        <button class="btn btn-light p-3" type="submit">Start a Conversation</button>
+      </form>
+    </div>
+  </div>
+
+        {% for thread in threads.all %}
+            {% if thread.receiver == request.user %}
+              <div class="row mb-3">
+                <div class="card col-md-12 p-5 shadow-sm">
+                  <h5>{{ thread.user }}</h5>
+                  <a class="stretched-link" href="{% url 'chat:thread' thread.pk %}"><h5></h5></a>
+                </div>
+              </div>
+            {% else %}
+            <div class="row mb-3">
+                <div class="card col-md-12 p-5 shadow-sm">
+                  <h5>{{ thread.receiver }}</h5>
+                  <a class="stretched-link" href="{% url 'chat:thread' thread.pk %}"><h5></h5></a>
+                </div>
+              </div>
+            {% endif %}
+        {% endfor %}
+</div>
+
+
+</body>
+</html>
