@@ -1,9 +1,13 @@
 from itertools import chain
 import random
+
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+
 from .models import Profile, Post, LikePost, FollowersCount
 
 
@@ -90,6 +94,19 @@ def like_post(request):
         post.num_of_likes = post.num_of_likes-1
         post.save()
         return redirect('/')
+
+
+@login_required(login_url='signin')
+def favorite(request, post_id):
+    user = request.user
+    post = Post.objects.get(id=post_id)
+    profile = Profile.objects.get(user=user)
+
+    if profile.favorite.filter(id=post_id).exists():
+        profile.favorite.remove(post)
+    else:
+        profile.favorite.add(post)
+    return redirect('/')
 
 
 @login_required(login_url='signin')
@@ -211,7 +228,7 @@ def signin(request):
                                  password=password)
         if user is not None:
             auth.login(request, user)
-            return redirect('index')
+            return redirect('core:index')
         else:
             messages.info(request, 'Credentials Invalid')
             return redirect('signin')

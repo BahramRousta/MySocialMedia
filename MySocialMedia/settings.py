@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core.apps.CoreConfig',
     'chat.apps.ChatConfig',
+    'comment.apps.CommentConfig',
     'crispy_forms',
+    'django_social_share',
 ]
 
 MIDDLEWARE = [

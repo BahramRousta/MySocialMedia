@@ -1,0 +1,25 @@
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+         <img src="{{ post.image.url }}" alt="" height="400" width="300">
+        <h2>Add a new comment</h2>
+        <form method="post">
+        {{ comment_form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Add comment"></p>
+        </form>
+    {% for comment in comments %}
+        <li>
+            {{ comment.body }}
+        </li>
+    {% endfor %}
+
+</body>
+</html>

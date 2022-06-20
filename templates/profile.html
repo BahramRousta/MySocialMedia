@@ -27,37 +27,36 @@
 	<section>
 			<div class="feature-photo">
 				<figure><img src="{% static 'images/resources/timeline-1.jpg' %}" alt=""></figure>
-				<form action="/follow" method="post">
-                {% csrf_token %}
+				<form action="/follow" method="POST">
+					{% csrf_token %}
 					<div class="add-btn">
-					<span style="color: white; font-size: 27px; margin-right: 520px;"><b><u><a href="/">Home</a></u></b></span>
-                    {% if user_post_length %}
-					<span style="color: white; font-size: 27px;"><b>{{ user_post_length}} Posts</b></span>
-                        {% else %}
-                        <span style="color: white; font-size: 27px;"><b>No Post</b></span>
-                        {% endif %}
+					<span style="color: white; font-size: 27px; margin-right: 580px;"><b><u><a href="/">Home</a></u></b></span>
 
-                    {% if user_follower %}
-                        <span style="color: white; font-size: 27px;"><b>{{ user_follower}} followers</b></span>
-                    {% else %}
-                        <span style="color: white; font-size: 27px;"><b>0 followers</b></span>
-                    {% endif %}
+					{% if user_post_length == 0 %}
+					<span style="color: white; font-size: 27px;"><b>No Post</b></span>
+					{% elif user_post_length == 1 %}
+					<span style="color: white; font-size: 27px;"><b>{{user_post_length}} Post</b></span>
+					{% else %}
+					<span style="color: white; font-size: 27px;"><b>{{user_post_length}} Posts</b></span>
+					{% endif %}
 
-                    {% if user_following %}
-                        <span style="color: white; font-size: 27px;"><b>{{ user_following}} following</b></span>
-                    {% else %}
-                        <span style="color: white; font-size: 27px;"><b>0 following</b></span>
-                    {% endif %}
+					{% if user_followers == 0 or user_followers == 1 %}
+					<span style="color: white; font-size: 27px;"><b>{{user_followers}} follower</b></span>
+					{% else %}
+					<span style="color: white; font-size: 27px;"><b>{{user_followers}} followers</b></span>
+					{% endif %}
 
-                    <input type="hidden" value="{{ user.username }}" name="follower">
-                    <input type="hidden" value="{{ user_object.username }}" name="user">
 
-                    {% if user_object.username == user.username %}
-                        <a href="/settings">Account Settings</a>
-                    {% else %}
-                       <a href="" title="" data-ripple=""><button type="submit" style="background-color: #ffc0cb; border: #ffc0cb;">
-                           {{ button_text }}</button></a>
-                    {% endif %}
+					<span style="color: white; font-size: 27px;"><b>{{user_following}} following</b></span>
+
+					<input type="hidden" value="{{user.username}}" name="follower" />
+					<input type="hidden" value="{{user_object.username}}" name="user" />
+
+					{% if user_object.username == user.username %}
+					<a href="/settings" data-ripple="">Account Settings</a>
+					{% else %}
+					<a data-ripple=""><button type="submit" style="background-color: #ffc0cb; border: #ffc0cb;">{{button_text}}</button></a>
+					{% endif %}
 
 					</div>
 				</form>
@@ -74,13 +73,14 @@
 						<div class="col-lg-2 col-sm-3">
 							<div class="user-avatar">
 								<figure>
-									<img src="{{ user_profile.profileimg.url}}" style="height: 250px; width: 100%;" alt="">
-{#									<form class="edit-phto">#}
-{#										<i class="fa fa-camera-retro"></i>#}
-{#										<label class="fileContainer">#}
-{#											<a href="#account-settings">Upload Profile Photo</a>#}
-{#										</label>#}
-{#									</form>#}
+
+									<img src="{{user_profile.profileimg.url}}" style="height: 250px; width: 100%;" alt="">
+									<!-- <form class="edit-phto">
+										<i class="fa fa-camera-retro"></i>
+										<label class="fileContainer">
+											<a href="#account-settings">Upload Profile Photo</a>
+										</label>
+									</form> -->
 								</figure>
 							</div>
 						</div>
@@ -116,7 +116,7 @@
 		</section><!-- top area -->
 		<section>
 			<div class="bio">
-                {{ user_profile.bio}}
+					{{user_profile.bio}}
 			</div>
 		</section>
 		
@@ -146,15 +146,15 @@
 							<div class="col-lg-6">
 								<div class="central-meta">
 									<ul class="photos">
-
-                                        {% for post in user_post %}
-                                            <li>
-											<a class="strip" href="{{ post.image.url }}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-												<img src="{{ post.image.url }}" style="height: 250px; width: 300px;" alt=""></a>
+					
+										{% for post in user_posts %}
+										<li>
+											<a class="strip" href="{{post.image.url}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
+												<img src="{{post.image.url}}" style="height: 250px; width: 300px;" alt=""></a>
 										</li>
-                                        {% endfor %}
-
-
+										{% endfor %}
+										
+										
 										
 									</ul>
 									<!--<div class="lodmore"><button class="btn-view btn-load-more"></button></div>-->

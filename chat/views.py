@@ -55,7 +55,7 @@ class ThreadView(View):
 
 class CreateMessage(View):
     def post(self, request, pk, *args, **kwargs):
-        thread= ThreadModel.objects.get(pk=pk)
+        thread = ThreadModel.objects.get(pk=pk)
 
         if thread.receiver == request.user:
             receiver = thread.user

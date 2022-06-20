@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name = 'core'
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('signup', views.signup, name='signup'),
@@ -8,6 +10,7 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
     path('follow', views.follow, name='follow'),
     path('profile/<str:pk>', views.profile, name='profile'),
+    path('favorite/<str:post_id>', views.favorite, name='favorite'),
     path('settings', views.settings, name='settings'),
     path('upload', views.upload, name='upload'),
     path('like_post', views.like_post, name='like_post'),

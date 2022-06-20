@@ -1,5 +1,6 @@
 {% load static %}
-
+{% load crispy_forms_tags %}
+{% load social_share %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +8,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{% static 'favicon.png' %}" rel="icon" type="image/png">
     <title>Home</title>
     <meta charset="utf-8">
@@ -15,7 +18,6 @@
     <link rel="stylesheet" href="{% static 'assets/css/uikit.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -209,6 +211,7 @@
                         </a>
                         <div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown border-t">
                             <ul>
+                                <li><a href="{% url 'core:profile' request.user %}"> Profile </a>
                                 <li><a href="/settings"> Account setting </a>
                                 <li><a href="/signin"> Log Out</a></li>
                             </ul>
@@ -249,6 +252,9 @@
                                       <li>
                                           <a href="#" class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md ">
                                            <i class="uil-share-alt mr-1"></i> Share
+                                              {% post_to_facebook object_or_url "Post to Facebook!" %}
+                                                {% post_to_whatsapp  object_or_url "Share To WA" %}
+                                                {% post_to_reddit  object_or_url "Share To Reddit" %}
                                           </a>
                                       </li>
                                       <li>
@@ -262,7 +268,7 @@
                                           </a>
                                       </li>
                                       <li>
-                                          <a href="#" class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md ">
+                                          <a href="{% url 'core:favorite' post.id %}" class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md ">
                                            <i class="uil-favorite mr-1"></i>  Add favorites
                                           </a>
                                       </li>
@@ -284,6 +290,13 @@
                                 <a href="{{post.image.url}}">
                                     <img src="{{post.image.url}}" alt="">
                                 </a>
+                            </div>
+                            <br>
+
+                            <div>
+                                  <a href="{% url 'comment:comment' post.id %}}" class="comment-box px-3 py-2 text-red-500 hover:bg-red-100 hover:text-red-500 rounded-md ">
+                                   <i class="comments"></i>  Comment
+                                  </a>
                             </div>
 
 
